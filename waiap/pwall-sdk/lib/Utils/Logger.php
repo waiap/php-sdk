@@ -22,7 +22,7 @@ class Logger{
    */
   public function log(String $message){
     if($this->log_file !== false){
-      fwrite($this->log_file, $message . PHP_EOL);
+      fwrite("[" . date('Y-m-d\TH:i:s\Z', time()) . "] " .$this->log_file, $message . PHP_EOL);
     }
   }
 
