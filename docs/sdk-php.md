@@ -19,9 +19,6 @@ composer require sipay-sdk
 
 O descargando a través del siguiente <a href="https://www.sipay.es/" target="_blank">enlace.</a>
 
-:::important ATENCIÓN
-Pendiente de subir a packagist y obtenter enlace de descarga.
-:::
 
 ## Clases
 
