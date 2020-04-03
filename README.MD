@@ -14,7 +14,7 @@ Para el uso de la librería se requiere la versión de PHP 5.6 o superior y la l
 La librería puede ser requerida a través del uso de composer:
 
 ```bash 
-composer require sipay-sdk  
+composer require waiap/pwall-sdk
 ```
 
 O descargando a través del siguiente <a href="https://www.sipay.es/" target="_blank">enlace.</a>
