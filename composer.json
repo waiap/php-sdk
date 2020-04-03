@@ -1,7 +1,6 @@
 {
   "name": "waiap/pwall-sdk",
   "description": "SDK to implement payment method 'Payment Wall'",
-  "minimum-stability": "dev",
   "version": "1.0.0",
   "require": {
       "php": ">=5.3.0"
