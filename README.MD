@@ -17,9 +17,6 @@ La librería puede ser requerida a través del uso de composer:
 composer require waiap/pwall-sdk
 ```
 
-O descargando a través del siguiente <a href="https://www.sipay.es/" target="_blank">enlace.</a>
-
-
 ## Clases
 
 Para empezar vamos a repasar las distintas clases usadas por el SDK. Estás ayudarán al desarrollador a construir una petición, hacer el proxy a los servidores y procesar una respuesta para el Payment Wall que se encuentra en el frontend de la aplicación.
