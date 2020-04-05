@@ -23,12 +23,12 @@ Para empezar vamos a repasar las distintas clases usadas por el SDK. Estás ayud
 
 ### Clase \PWall\Request
 
-Para información sobre la clase que construye las peticiones utilizar el siguiente [enlace.](sdk-php-request.md) 
+Para información sobre la clase que construye las peticiones utilizar el siguiente [enlace.](docs/sdk-php-request.md) 
 
 ### Clase \PWall\Client
 
-Para información sobre la clase que se utiliza para enviar las peticiones a Sipay utilizar el siguiente [enlace.](sdk-php-client.md) 
+Para información sobre la clase que se utiliza para enviar las peticiones a Sipay utilizar el siguiente [enlace.](docs/sdk-php-client.md) 
 
 ### Clase \PWall\Response
 
-Para información sobre la clase que procesa las respuestas utilizar el siguiente [enlace.](sdk-php-response.md) 
+Para información sobre la clase que procesa las respuestas utilizar el siguiente [enlace.](docs/sdk-php-response.md) 
