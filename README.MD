@@ -3,7 +3,7 @@ id: sdk-php
 title: Introducción
 ---
 
-En esta documentación vamos a explicar el uso del SDK de PHP, para la documentación sobre el SDK de Javascript ir al siguiente [enlace.](sdk-js.md)  
+En esta documentación vamos a explicar el uso del SDK de PHP, para la documentación sobre el SDK de Javascript ir al siguiente [enlace.](https://github.com/waiap/javascript-sdk/blob/master/README.md)  
 
 El SDK de PHP para Payment Wall está enfocado en minimizar el esfuerzo requerido para desarrollar e integrar el método de pago Payment Wall en cualquier tipo de integración abstrayendo al usuario de la lógica interna necesaria para el funcionamiento.
 
