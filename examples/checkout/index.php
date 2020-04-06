@@ -4,9 +4,9 @@
     $server_request = file_get_contents('php://input');
     $client = new \PWall\Client();
     $client->setEnvironment("sandbox");
-    $client->setKey("<inserte su key proporcionada por su integrador>");
-    $client->setResource("<insert el nombre del resource proporcionado por su integrador");
-    $client->setSecret("<inserte el secret porporcionado por su integrador>");
+    $client->setKey("<insert your key provided by your integrator>");
+    $client->setResource("<insert your resource provided by your integrator");
+    $client->setSecret("<insert your secret provided by your integrator>");
     $client->setBackendUrl("https://domain.host/example/checkout.html");
     $client->setDebugFile("/var/www/log/debug.log"); // logger .   
     $request = new \PWall\Request($server_request, false);
@@ -20,8 +20,8 @@
     $response = $client->proxy($request);
 
     if($response->canPlaceOrder()){
-        // Aquí se incluiría el código para cerrar el pedido.
-        // Se puede utilizar la siguiente información adicional.
+        // Here would be included the code for closing the order.
+        // You can use the following additional information.
         $response->getPaidAmount();
         $response->getPaymentMethod(); 
         $response->getPaymentInfo();   
