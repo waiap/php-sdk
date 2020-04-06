@@ -27,7 +27,7 @@
         $response->getPaymentInfo();   
      }else{
         if(!$response->isValid()){
-          // Utilizado para mostrar un error
+          // Used to display an error
           $response->getErrorCode();
           $response->getErrorMessage();
         }
