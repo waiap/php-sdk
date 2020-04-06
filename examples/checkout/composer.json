@@ -1,0 +1,5 @@
+{
+    "require": {
+        "waiap/pwall-sdk": "^1.0.3"
+    }
+}

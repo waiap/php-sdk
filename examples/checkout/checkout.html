@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://sandbox.sipay.es/pwall_app/css/app.css">
+    <script type="text/javascript" src="https://sandbox.sipay.es/pwall_sdk/pwall_sdk.bundle.js"></script>
+    <script src="https://assets-sipay.s3-eu-west-1.amazonaws.com/sdk-js/pwall-sdk.min.js"></script>
+  </head>
+  <body>
+    <form id="backoffice-form">
+      <label for=firstname>First Name</label>
+      <input id="firstname" type="text" />
+      <label for=email>Email</label>
+      <input id="email" type="text" />
+    </form>
+  </body>
+  <script>
+    function validate(){
+      return true;
+    };
+    const client = new PWall('sandbox', true);
+
+    // add params to checkout 
+    const checkout = client.checkout()
+      .appendTo("#backoffice-form")
+      .validateForm(this.validate)
+      .backendUrl("https://domain.host/controller/example/index.php");
+    // only validate fields if not request_id
+    if(!!!(client.parseUrlParams('request_id') && client.parseUrlParams('method'))){
+        checkout
+        .validateFields({
+         "#firstname" : PWall.VALIDATE_MIN_LENGTH(5),
+         "#email" : PWall.VALIDATE_EMAIL
+        });
+      }
+    // add listeners and init
+    checkout
+      .on("beforeValidation", function(){console.log("BEFORE VALIDATION CALLBACK")})
+      .on("afterValidation", function(){ console.log("AFTER VALIDATION CALLBACK") })
+      .on("paymentOk", function(){console.log("PAYMENT OK")})
+      .on("paymentKo", function(){console.log("PAYMENT KO")})
+      .amount(1.00)
+      .currency("EUR")
+      .groupId(0)
+      .init();
+  </script>
+</html>
