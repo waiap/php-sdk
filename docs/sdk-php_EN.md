@@ -23,12 +23,12 @@ To begin with we will review the different classes used by the SDK. These will h
 
 ### Class \PWall\Request
 
-For information about the class that builds the requests use the following [link.](docs/sdk-php-request_EN.md) 
+For information about the class that builds the requests use the following [link.](sdk-php-request_EN.md) 
 
 ### Class \PWall\Client
 
-For information about the class used to send requests to Waiap use the following [link.](docs/sdk-php-client_EN.md) 
+For information about the class used to send requests to Waiap use the following [link.](sdk-php-client_EN.md) 
 
 ### Class \PWall\Response
 
-For information about the class that processes the answers use the following [link.](docs/sdk-php-response_EN.md) 
+For information about the class that processes the answers use the following [link.](sdk-php-response_EN.md) 
