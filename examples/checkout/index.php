@@ -19,4 +19,18 @@
 
     $response = $client->proxy($request);
 
+    if($response->canPlaceOrder()){
+        // Aquí se incluiría el código para cerrar el pedido.
+        // Se puede utilizar la siguiente información adicional.
+        $response->getPaidAmount();
+        $response->getPaymentMethod(); 
+        $response->getPaymentInfo();   
+     }else{
+        if(!$response->isValid()){
+          // Utilizado para mostrar un error
+          $response->getErrorCode();
+          $response->getErrorMessage();
+        }
+    }
+
     echo $response->toJSON();
