@@ -24,9 +24,9 @@ class Request
   }
   
   /**
-   * Returns the required JSON to proxy a request to Sipay
+   * Returns the required JSON to proxy a request to Waiap
    *
-   * @return String JSON request ready to proxy to Sipay
+   * @return String JSON request ready to proxy to Waiap
    */
   public function toJSON(){
     $json_request                               = $this->request;
@@ -39,9 +39,9 @@ class Request
   }
 
   /**
-   * Returns the required Array to proxy a request to Sipay
+   * Returns the required Array to proxy a request to Waiap
    *
-   * @return String Array request ready to proxy to Sipay
+   * @return String Array request ready to proxy to Waiap
    */
   public function toArray()
   {
