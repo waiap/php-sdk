@@ -40,7 +40,7 @@ class Client
   }
 
   /**
-   * Proxy a request to Sipay for process
+   * Proxy a request to Waiap for process
    *
    * @param  \PWall\Request $request 
    * @return \PWall\Response|\PWall\SaleResponse
@@ -81,9 +81,9 @@ class Client
   }
 
   /**
-   * Sets the key that will be used for authentication with Sipay
+   * Sets the key that will be used for authentication with Waiap
    *
-   * @param  String $key Key provided by Sipay
+   * @param  String $key Key provided by Waiap
    * @return void
    */
   public function setKey(String $key){
@@ -91,9 +91,9 @@ class Client
   }
   
   /**
-   * Sets the resource that will be used for authentication with Sipay
+   * Sets the resource that will be used for authentication with Waiap
    *
-   * @param  String $resource Resource provided by Sipay
+   * @param  String $resource Resource provided by Waiap
    * @return void
    */
   public function setResource(String $resource){
@@ -101,9 +101,9 @@ class Client
   }
   
   /**
-   * Sets the secret that will be used for authentication with Sipay
+   * Sets the secret that will be used for authentication with Waiap
    *
-   * @param  String $secret Secret provided by Sipay
+   * @param  String $secret Secret provided by Waiap
    * @return void
    */
   public function setSecret(String $secret){
