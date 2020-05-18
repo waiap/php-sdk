@@ -17,7 +17,7 @@ class Response
   /**
    * Returns the JSON response
    *
-   * @return String JSON response
+   * @return string JSON response
    */
   public function toJSON(){
     return json_encode($this->response);
@@ -26,7 +26,7 @@ class Response
   /**
    * Returns error code if there was an error
    *
-   * @return String error code if there was an error, null otherwise
+   * @return string error code if there was an error, null otherwise
    */
   public function getErrorCode(){
     if(array_key_exists("result", $this->response)
