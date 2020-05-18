@@ -70,10 +70,10 @@ class Client
   /**
    * Sets the enviroment where the payment method will operate ('sandbox' or 'live')
    *
-   * @param  String $enviroment Specific values can be 'sandbox' or 'live'
+   * @param  \string $enviroment Specific values can be 'sandbox' or 'live'
    * @return void
    */
-  public function setEnvironment(String $enviroment){
+  public function setEnvironment( $enviroment){
     if(!array_key_exists($enviroment, \PWall\Helper\Constants::ENVIROMENTS_URLS)){
       throw new \PWall\Exception\InvalidArgumentException('Enviroment must be one of these values: ' . implode(', ', array_keys(\PWall\Helper\Constants::ENVIROMENTS_URLS)));
     }
@@ -83,30 +83,30 @@ class Client
   /**
    * Sets the key that will be used for authentication with Waiap
    *
-   * @param  String $key Key provided by Waiap
+   * @param  \string $key Key provided by Waiap
    * @return void
    */
-  public function setKey(String $key){
+  public function setKey($key){
     $this->key = $key;
   }
   
   /**
    * Sets the resource that will be used for authentication with Waiap
    *
-   * @param  String $resource Resource provided by Waiap
+   * @param  \string $resource Resource provided by Waiap
    * @return void
    */
-  public function setResource(String $resource){
+  public function setResource($resource){
     $this->resource = $resource;
   }
   
   /**
    * Sets the secret that will be used for authentication with Waiap
    *
-   * @param  String $secret Secret provided by Waiap
+   * @param  \string $secret Secret provided by Waiap
    * @return void
    */
-  public function setSecret(String $secret){
+  public function setSecret($secret){
     $this->secret = $secret;
   }
   
@@ -114,10 +114,10 @@ class Client
    * Sets the url where the Waiap Payment Wall will be rendered on to receive 
    * notifications about payments
    *
-   * @param  String $backend_url Url where Waiap Payment Wall will be rendered on
+   * @param  \string $backend_url Url where Waiap Payment Wall will be rendered on
    * @return void
    */
-  public function setBackendUrl(String $backend_url){
+  public function setBackendUrl($backend_url){
     $this->backend_url = $backend_url;
   }
   
@@ -125,10 +125,10 @@ class Client
    * Sets the file where logs will be stored for debugging purposes
    * If no debug file path is provided there will be no logs
    *
-   * @param  String $debug_file Path to debug file
+   * @param  \string $debug_file Path to debug file
    * @return void
    */
-  public function setDebugFile(String $debug_file = "false"){
+  public function setDebugFile($debug_file){
     $this->debug_file = $debug_file;
   }
   
@@ -138,7 +138,7 @@ class Client
    * @param  int $timeout Tiemout in ms
    * @return void
    */
-  public function setTimeout(int $timeout = 30000){
+  public function setTimeout($timeout){
     $this->timeout = $timeout;
   }
 

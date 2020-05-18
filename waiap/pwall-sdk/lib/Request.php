@@ -13,8 +13,8 @@ class Request
   private $notify   = null;
 
   public function __construct(
-    String  $jsonRequest,
-    bool    $isAdmin = false
+    $jsonRequest,
+    $isAdmin
   ){
     $this->request      = json_decode($jsonRequest, true);
     $this->order_id     = $isAdmin ? str_pad("0", 12, "0", STR_PAD_LEFT) : null;
@@ -26,7 +26,7 @@ class Request
   /**
    * Returns the required JSON to proxy a request to Waiap
    *
-   * @return String JSON request ready to proxy to Waiap
+   * @return  JSON request ready to proxy to Waiap
    */
   public function toJSON(){
     $json_request                               = $this->request;
@@ -41,7 +41,7 @@ class Request
   /**
    * Returns the required Array to proxy a request to Waiap
    *
-   * @return String Array request ready to proxy to Waiap
+   * @return  Array request ready to proxy to Waiap
    */
   public function toArray()
   {
@@ -61,7 +61,7 @@ class Request
    * @param  mixed $order_id Order id which the petition is built around 
    * @return void
    */
-  public function setOrderId(String $order_id){
+  public function setOrderId($order_id){
     if(strlen($order_id) > 12){
       throw new \PWall\Exception\InvalidArgumentException('Order id must not exceed 12 characters');
     }
@@ -75,21 +75,21 @@ class Request
    * @param  float $amount Amount with decimals that will be charged to customer
    * @return void
    */
-  public function setAmount(float $amount){
+  public function setAmount($amount){
     if($amount <= floatval(0)){
       throw new \PWall\Exception\InvalidArgumentException('Order amount must be more than 0');
     }
-    $this->amount = $amount * 100;
+    $this->amount = strval($amount * 100);
   }
 
 
   /**
    * Sets currency of the sale operation
    *
-   * @param  String $currency ISO 4217 currency code
+   * @param   $currency ISO 4217 currency code
    * @return void
    */
-  public function setCurrency(String $currency){
+  public function setCurrency($currency){
     $this->currency = $currency;
   }
   
@@ -99,25 +99,19 @@ class Request
    * @param int $customer_id Customer id group
    * @return void
    */
-  public function setGroupId(int $customer_id){
+  public function setGroupId($customer_id){
     $this->group_id = $customer_id;
   }
 
   /**
    * Sets return url for redirect payment methods
    *
-   * @param string $url url to redirect after payment gateway
+   * @param  $url url to redirect after payment gateway
    * @return void
    */
-  public function setNotifyResult(String $url)
+  public function setNotifyResult($url)
   {
-    //Clean url of query params    
-    $parsed_url = parse_url($url);
-    if (array_key_exists('query', $parsed_url)) {
-      $this->notify = preg_replace('/\?' . $parsed_url['query'] . '/', '', $url);
-    } else {
-      $this->notify = $url;
-    }
+    $this->notify = $url;
   }
     
   /**

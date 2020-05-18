@@ -15,13 +15,13 @@ class ProxyHelper{
   private $timeout      = null;
 
   public function __construct(
-    String  $enviroment,
-    String  $key,
-    String  $resource,
-    String  $secret,
-    String  $backendUrl,
-    String  $debugFile,
-    int     $timeout
+    $enviroment,
+    $key,
+    $resource,
+    $secret,
+    $backendUrl,
+    $debugFile,
+    $timeout
   )
   {
     $this->enviroment   = $enviroment;

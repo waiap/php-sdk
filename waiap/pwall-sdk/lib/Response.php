@@ -9,7 +9,7 @@ class Response
   protected $response;
 
   public function __construct(
-    String $jsonResponse
+    $jsonResponse
   ){
     $this->response = json_decode($jsonResponse, true);
   }

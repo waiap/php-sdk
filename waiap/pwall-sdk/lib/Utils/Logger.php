@@ -9,7 +9,7 @@ class Logger{
   private $log_file;
 
   public function __construct(
-    String $logFilePath
+    $logFilePath
   ){
     $this->log_file = fopen($logFilePath, 'a');
   }
@@ -20,7 +20,7 @@ class Logger{
    * @param  String $message message to log
    * @return void
    */
-  public function log(String $message){
+  public function log($message){
     if($this->log_file !== false){
       fwrite($this->log_file, "[" . date('Y-m-d\TH:i:s\Z', time()) . "] " . $message . PHP_EOL);
     }

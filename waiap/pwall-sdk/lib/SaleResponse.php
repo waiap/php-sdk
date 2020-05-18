@@ -8,7 +8,7 @@ class SaleResponse extends \PWall\Response
 {
 
   public function __construct(
-    String $jsonResponse
+    $jsonResponse
   ){
     parent::__construct($jsonResponse);
   }
@@ -82,7 +82,7 @@ class SaleResponse extends \PWall\Response
   }
 
   
-  private function flatten(array $array) {
+  private function flatten($array) {
     $result = array();
     foreach($array as $key=>$value) {
         if(is_array($value)) {
