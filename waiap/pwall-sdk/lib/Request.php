@@ -7,10 +7,11 @@ namespace PWall;
 class Request
 {
   private $request;
-  private $order_id = null;
-  private $currency = null;
-  private $group_id = null;
-  private $notify   = null;
+  private $order_id     = null;
+  private $currency     = null;
+  private $group_id     = null;
+  private $original_url = null;
+  private $notify       = null;
 
   public function __construct(
     $jsonRequest,
@@ -21,6 +22,7 @@ class Request
     $this->currency     = $isAdmin ? "" : null;
     $this->amount       = $isAdmin ? 0 : null;
     $this->group_id     = $isAdmin ? 0 : null;
+    $this->original_url = $isAdmin ? 0 : null;
   }
   
   /**
@@ -34,6 +36,7 @@ class Request
     $json_request["params"]["amount"]           = $this->amount;
     $json_request["params"]["currency"]         = $this->currency;
     $json_request["params"]["group_id"]         = $this->group_id;
+    $json_request["params"]["original_url"]     = $this->original_url;
     $json_request["params"]["notify"]["result"] = $this->notify;
     return json_encode($json_request);
   }
@@ -50,6 +53,7 @@ class Request
     $json_request["params"]["amount"]           = $this->amount;
     $json_request["params"]["currency"]         = $this->currency;
     $json_request["params"]["group_id"]         = $this->group_id;
+    $json_request["params"]["original_url"]     = $this->original_url;
     $json_request["params"]["notify"]["result"] = $this->notify;
     return $json_request;
   }
@@ -101,6 +105,20 @@ class Request
    */
   public function setGroupId($customer_id){
     $this->group_id = $customer_id;
+  }
+
+  /**
+   * Sets original url for the request
+   *
+   * @param string $original_url Base url of commerce
+   * @return void
+   */
+  public function setOriginalUrl($original_url){
+    $parsed_url = parse_url($original_url);
+    if (!$parsed_url) {
+      throw new \PWall\Exception\InvalidArgumentException('Invalid url');
+    }
+    $this->original_url = $parsed_url["host"];
   }
 
   /**
