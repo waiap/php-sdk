@@ -20,9 +20,9 @@ class Request
     $this->request      = json_decode($jsonRequest, true);
     $this->order_id     = $isAdmin ? str_pad("0", 12, "0", STR_PAD_LEFT) : null;
     $this->currency     = $isAdmin ? "" : null;
-    $this->amount       = $isAdmin ? 0 : null;
+    $this->amount       = $isAdmin ? "0" : null;
     $this->group_id     = $isAdmin ? 0 : null;
-    $this->original_url = $isAdmin ? 0 : null;
+    $this->original_url = $isAdmin ? "" : null;
   }
   
   /**
