@@ -7,10 +7,11 @@ namespace PWall;
 class Request
 {
   private $request;
-  private $order_id = null;
-  private $currency = null;
-  private $group_id = null;
-  private $notify   = null;
+  private $order_id     = null;
+  private $currency     = null;
+  private $group_id     = null;
+  private $original_url = null;
+  private $notify       = null;
 
   public function __construct(
     $jsonRequest,
@@ -19,8 +20,9 @@ class Request
     $this->request      = json_decode($jsonRequest, true);
     $this->order_id     = $isAdmin ? str_pad("0", 12, "0", STR_PAD_LEFT) : null;
     $this->currency     = $isAdmin ? "" : null;
-    $this->amount       = $isAdmin ? 0 : null;
+    $this->amount       = $isAdmin ? "0" : null;
     $this->group_id     = $isAdmin ? 0 : null;
+    $this->original_url = $isAdmin ? "" : null;
   }
   
   /**
@@ -34,6 +36,7 @@ class Request
     $json_request["params"]["amount"]           = $this->amount;
     $json_request["params"]["currency"]         = $this->currency;
     $json_request["params"]["group_id"]         = $this->group_id;
+    $json_request["params"]["original_url"]     = $this->original_url;
     $json_request["params"]["notify"]["result"] = $this->notify;
     return json_encode($json_request);
   }
@@ -50,6 +53,7 @@ class Request
     $json_request["params"]["amount"]           = $this->amount;
     $json_request["params"]["currency"]         = $this->currency;
     $json_request["params"]["group_id"]         = $this->group_id;
+    $json_request["params"]["original_url"]     = $this->original_url;
     $json_request["params"]["notify"]["result"] = $this->notify;
     return $json_request;
   }
@@ -76,9 +80,9 @@ class Request
    * @return void
    */
   public function setAmount($amount){
-    if($amount <= floatval(0)){
-      throw new \PWall\Exception\InvalidArgumentException('Order amount must be more than 0');
-    }
+    // if($amount <= floatval(0)){
+    //   throw new \PWall\Exception\InvalidArgumentException('Order amount must be more than 0');
+    // }
     $this->amount = strval($amount * 100);
   }
 
@@ -101,6 +105,20 @@ class Request
    */
   public function setGroupId($customer_id){
     $this->group_id = $customer_id;
+  }
+
+  /**
+   * Sets original url for the request
+   *
+   * @param string $original_url Base url of commerce
+   * @return void
+   */
+  public function setOriginalUrl($original_url){
+    $parsed_url = parse_url($original_url);
+    if (!$parsed_url) {
+      throw new \PWall\Exception\InvalidArgumentException('Invalid url');
+    }
+    $this->original_url = $parsed_url["host"];
   }
 
   /**
@@ -128,5 +146,36 @@ class Request
 
     return false;
   }
-  
+
+  /**
+   * Check if request is and action of express checkbox
+   * 
+   * @return boolean true if request is for sale action, false otherwise
+   */
+  public function isActionExpressCheckout(){
+    if(is_array($this->request)
+    && array_key_exists("params", $this->request) 
+    && array_key_exists("express_checkout", $this->request["params"])
+    && $this->request["params"]["express_checkout"] == true){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if request is getExtraData action
+   * 
+   * @return boolean true if request is for sale action, false otherwise
+   */
+  public function isActionGetExtraData()
+  {
+    if (
+      is_array($this->request)
+      && array_key_exists("action", $this->request)
+      && $this->request["action"] == true
+    ) {
+      return true;
+    }
+    return false;
+  }
 }
