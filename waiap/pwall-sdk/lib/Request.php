@@ -178,4 +178,38 @@ class Request
     }
     return false;
   }
+
+  /**
+   * Check if request is Paypal get cart info action
+   * 
+   * @return boolean true if request is Paypal get cart info action, false otherwise
+   */
+  public function isPaypalEcCreateOrder(){
+    if(
+      is_array($this->request)
+      && array_key_exists("params", $this->request)
+      && array_key_exists("create_order", $this->request["params"])
+      && $this->request["params"]["create_order"] == true
+      && array_key_exists("method", $this->request["params"])
+      && $this->request["params"]["method"] == "paypal"
+      && array_key_exists("express", $this->request["params"])
+      && $this->request["params"]["express"] == true
+    ){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Set cart info to paypal express checkout
+   * @param  string $items      Cart info formatted as Paypal requierements
+   * @param  string $is_digital true if all items in the cart are digital, false otherwise
+   * @return void
+   */
+  public function setPaypalEcCartInfo($items, $is_digital)
+  {
+    $this->request["params"]["items"]       = $items;
+    $this->request["params"]["is_digital"]  = $is_digital;
+  }
+
 }
