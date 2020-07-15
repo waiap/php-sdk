@@ -139,23 +139,6 @@ class Response
     && array_key_exists("address", $this->response["result"]["payload"])){
       return true;
     }
-    if (
-      is_array($this->response)
-      && array_key_exists("result", $this->response)
-      && array_key_exists("payload", $this->response["result"])
-      && array_key_exists("shipping_address", $this->response["result"]["payload"])
-    ) {
-      return true;
-    }
-    if (
-      is_array($this->response)
-      && array_key_exists("result", $this->response)
-      && array_key_exists("payload", $this->response["result"])
-      && array_key_exists("result", $this->response["result"]["payload"])
-      && array_key_exists("address", $this->response["result"]["payload"]["result"])
-    ) {
-      return true;
-    }
     return false;
   }
 
@@ -169,15 +152,6 @@ class Response
     && array_key_exists("result", $this->response)
     && array_key_exists("payload", $this->response["result"])
     && array_key_exists("customer", $this->response["result"]["payload"])){
-      return true;
-    }
-    if (
-      is_array($this->response)
-      && array_key_exists("result", $this->response)
-      && array_key_exists("payload", $this->response["result"])
-      && array_key_exists("result", $this->response["result"]["payload"])
-      && array_key_exists("customer", $this->response["result"]["payload"]["result"])
-    ) {
       return true;
     }
     return false;
