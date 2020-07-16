@@ -196,6 +196,23 @@ class Response
   }
 
   /**
+   * Check for update amount in response, to ignore address if any
+   * @param  string $message Error message to return
+   * @return void
+   */
+  public function hasUpdateAmount(){
+    if (
+      is_array($this->response)
+      && array_key_exists("result", $this->response)
+      && array_key_exists("payload", $this->response["result"])
+      && array_key_exists("update_amount", $this->response["result"]["payload"])
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * This response checks if the response is valid for place order
    *
    * @return boolean true if can place order, otherwise false
