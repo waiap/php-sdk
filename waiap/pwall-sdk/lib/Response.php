@@ -62,6 +62,22 @@ class Response
 
     return null;
   }
+  /**
+   * Return address if the response has address based on key (for express checkout)
+   * $key: address | billing_address
+   * 
+   * @return array|null array with address if response has address, otherwise null
+   */
+
+  public function getAddressFromResponse($key){
+    if(is_array($this->response)
+    && array_key_exists("result", $this->response)
+    && array_key_exists("payload", $this->response["result"]) 
+    && array_key_exists("address", $this->response["result"]["payload"])){
+      return $this->response["result"]["payload"][$key];
+    }
+    return null;
+  }
 
   /**
    * Return address if the response has address (for express checkout)
@@ -69,13 +85,17 @@ class Response
    * @return array|null array with address if response has address, otherwise null
    */
   public function getAddress(){
-    if(is_array($this->response)
-    && array_key_exists("result", $this->response)
-    && array_key_exists("payload", $this->response["result"])
-    && array_key_exists("address", $this->response["result"]["payload"])){
-      return $this->response["result"]["payload"]["address"];
-    }
-    return null;
+    return $this->getAddressFromResponse("address");
+  }
+
+
+   /**
+   * Return billing address if the response has address (for express checkout)
+   *
+   * @return array|null array with billing address if response has address, otherwise null
+   */
+  public function getBillingAddress(){
+    return $this->getAddressFromResponse("billing_address");
   }
 
   /**
@@ -116,7 +136,7 @@ class Response
    */
   public function isCreatePendingOrder(){
     if(is_array($this->response)
-    && array_key_exists("result", $this->response)
+    && $this->response["result"] != null && array_key_exists("payload", $this->response["result"])
     && array_key_exists("payload", $this->response["result"])
     && array_key_exists("create_order", $this->response["result"]["payload"])
     && array_key_exists("express", $this->response["result"]["payload"])
@@ -135,8 +155,23 @@ class Response
   public function hasAddress(){
     if(is_array($this->response)
     && array_key_exists("result", $this->response)
-    && array_key_exists("payload", $this->response["result"])
+    && $this->response["result"] != null && array_key_exists("payload", $this->response["result"])
     && array_key_exists("address", $this->response["result"]["payload"])){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if the response has billing address (for express checkout)
+   *
+   * @return boolean true if response has address, otherwise false
+   */
+  public function hasBillingAddress(){
+    if(is_array($this->response)
+    && array_key_exists("result", $this->response)
+    && $this->response["result"] != null && array_key_exists("payload", $this->response["result"])
+    && array_key_exists("billing_address", $this->response["result"]["payload"])){
       return true;
     }
     return false;
