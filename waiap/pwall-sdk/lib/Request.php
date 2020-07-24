@@ -58,14 +58,11 @@ class Request
       $paypal_item                             = new \stdClass();
       $unit_amount                             = new \stdClass();
       $paypal_item->unit_amount                = new \stdClass();
-      //$paypal_item->tax                        = new \stdClass();
       $paypal_item->name                       = $item["name"];
       $paypal_item->quantity                   = strval($item["qty"]);
       $paypal_item->sku                        = $item["sku"];
       $paypal_item->unit_amount->currency_code = $currencyCode;
       $paypal_item->unit_amount->value         = strval($price_per_unit);
-      // $paypal_item->tax->currency_code         = $currencyCode;
-      // $paypal_item->tax->value                 = strval($tax_per_unit); 
       
       if($item["is_digital"]){
         $paypal_item->category    = "DIGITAL_GOODS";
@@ -75,7 +72,6 @@ class Request
       }
       // update totals:
       $totals->total->value      += $paypal_item->unit_amount->value * $item["qty"];
-      //$totals->tax_total->value  += $paypal_item->tax->value         * $item["qty"];
       $cart_items[] = $paypal_item;
     }
 
