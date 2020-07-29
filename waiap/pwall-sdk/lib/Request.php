@@ -262,6 +262,23 @@ class Request
     return false;
   }
 
+  /**
+   * Check for update amount in response, to ignore address if any
+   * @param  string $message Error message to return
+   * @return void
+   */
+  public function hasUpdateAmount(){
+    //$this->request["params"]
+    if (
+      is_array($this->request)
+      && array_key_exists("params", $this->request)
+      && array_key_exists("update_amount", $this->request["params"])
+    ) {
+      return true;
+    }
+    return false;
+  }
+
 /**
    * Set cart info to paypal express checkout
    * @param  string $items      Cart info formatted as Paypal requierements
