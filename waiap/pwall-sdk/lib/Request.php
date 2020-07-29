@@ -262,17 +262,19 @@ class Request
     return false;
   }
 
-  /**
+/**
    * Set cart info to paypal express checkout
    * @param  string $items      Cart info formatted as Paypal requierements
    * @param  string $is_digital true if all items in the cart are digital, false otherwise
+   * @param  string $breakdown  Cart breakdown totals
    * @return void
    */
-  public function setPaypalEcCartInfo($items, $is_digital)
+  public function setPaypalEcCartInfo($items, $is_digital, $breakdown)
   {
     $this->request["params"]["items"]       = $items;
     $this->request["params"]["is_digital"]  = $is_digital;
     $this->request["params"]["breakdown"]   = $breakdown;
   }
+
 
 }
