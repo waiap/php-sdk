@@ -272,6 +272,7 @@ class Request
   {
     $this->request["params"]["items"]       = $items;
     $this->request["params"]["is_digital"]  = $is_digital;
+    $this->request["params"]["breakdown"]   = $breakdown;
   }
 
 }
