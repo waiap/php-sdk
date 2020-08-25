@@ -136,7 +136,7 @@ class Response
    */
   public function isCreatePendingOrder(){
     if(is_array($this->response)
-    && $this->response["result"] != null && array_key_exists("payload", $this->response["result"])
+    && array_key_exists("result", $this->response) && $this->response["result"] != null && array_key_exists("payload", $this->response["result"])
     && array_key_exists("payload", $this->response["result"])
     && array_key_exists("create_order", $this->response["result"]["payload"])
     && array_key_exists("express", $this->response["result"]["payload"])
