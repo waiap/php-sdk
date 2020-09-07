@@ -242,18 +242,18 @@ class Request
   }
 
   /**
-   * Check if request is Paypal get cart info action
+   * Check if request is get cart info action
    * 
-   * @return boolean true if request is Paypal get cart info action, false otherwise
+   * @return boolean true if request is get cart info action, false otherwise
    */
-  public function isPaypalEcCreateOrder(){
+  public function isEcCreateOrder(){
     if(
       is_array($this->request)
       && array_key_exists("params", $this->request)
       && array_key_exists("create_order", $this->request["params"])
       && $this->request["params"]["create_order"] == true
-      && array_key_exists("method", $this->request["params"])
-      && $this->request["params"]["method"] == "paypal"
+      // && array_key_exists("method", $this->request["params"])
+      // && $this->request["params"]["method"] == "paypal"
       && array_key_exists("express", $this->request["params"])
       && $this->request["params"]["express"] == true
     ){
@@ -280,18 +280,23 @@ class Request
   }
 
 /**
-   * Set cart info to paypal express checkout
+   * Set cart info to express checkout
    * @param  string $items      Cart info formatted as Paypal requierements
    * @param  string $is_digital true if all items in the cart are digital, false otherwise
    * @param  string $breakdown  Cart breakdown totals
    * @return void
    */
-  public function setPaypalEcCartInfo($items, $is_digital, $breakdown)
+  public function setEcCartInfo($items, $is_digital, $breakdown)
   {
-    $this->request["params"]["items"]       = $items;
     $this->request["params"]["is_digital"]  = $is_digital;
-    $this->request["params"]["breakdown"]   = $breakdown;
-  }
+    if(
+      array_key_exists("params", $this->request)
+      && array_key_exists("method", $this->request["params"])
+      && $this->request["params"]["method"] == "paypal"){
+        $this->request["params"]["items"]       = $items;
+        $this->request["params"]["breakdown"]   = $breakdown;
+      }
 
+  }
 
 }

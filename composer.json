@@ -1,7 +1,7 @@
 {
   "name": "waiap/pwall-sdk",
   "description": "SDK to implement payment method 'Payment Wall'",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "authors": [
     {
       "name": "Bankia",
