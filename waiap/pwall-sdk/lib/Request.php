@@ -79,7 +79,7 @@ class Request
     $total_wo_shipping            =  strval(round((float)$total["total"] - $total["shipping"],2,PHP_ROUND_HALF_UP));
     $totals->shipping->value      =  strval(round((float)$total["shipping"],2,PHP_ROUND_HALF_UP));
     $totals->tax_total->value     =  round((float)$total["tax"],2,PHP_ROUND_HALF_UP);
-    $totals->discount->value      =  strval($totals->total->value + $totals->tax_total->value - $total_wo_shipping);
+    $totals->discount->value      =  strval(round($totals->total->value + $totals->tax_total->value - $total_wo_shipping,2,PHP_ROUND_HALF_UP));
     $totals->total->value         =  strval($totals->total->value);
     $totals->tax_total->value     =  strval($totals->tax_total->value);
     $totals->item_total->value    =  strval($totals->total->value);
