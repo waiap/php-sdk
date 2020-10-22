@@ -52,11 +52,9 @@ class Request
     foreach($items as $item){
       // calc per unit
       $price_per_unit                          = round((float)$item["unit_price"],2,PHP_ROUND_HALF_UP);
-      $tax_per_unit                            = round((float)$item["unit_tax"],2,PHP_ROUND_HALF_UP);
 
       // initialize
       $paypal_item                             = new \stdClass();
-      $unit_amount                             = new \stdClass();
       $paypal_item->unit_amount                = new \stdClass();
       $paypal_item->name                       = $item["name"];
       $paypal_item->quantity                   = strval($item["qty"]);
@@ -79,7 +77,13 @@ class Request
     $total_wo_shipping            =  strval(round((float)$total["total"] - $total["shipping"],2,PHP_ROUND_HALF_UP));
     $totals->shipping->value      =  strval(round((float)$total["shipping"],2,PHP_ROUND_HALF_UP));
     $totals->tax_total->value     =  round((float)$total["tax"],2,PHP_ROUND_HALF_UP);
-    $totals->discount->value      =  strval(round($totals->total->value + $totals->tax_total->value - $total_wo_shipping,2,PHP_ROUND_HALF_UP));
+    $discount                     =  round($totals->total->value + $totals->tax_total->value - $total_wo_shipping,2,PHP_ROUND_HALF_UP);
+    if($discount >= 0){
+      $totals->discount->value    = strval($discount);
+    }else{
+      $totals->discount->value    = strval(0);
+      $totals->tax_total->value   += abs($discount);
+    }
     $totals->total->value         =  strval($totals->total->value);
     $totals->tax_total->value     =  strval($totals->tax_total->value);
     $totals->item_total->value    =  strval($totals->total->value);
