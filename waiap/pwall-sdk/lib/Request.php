@@ -25,6 +25,68 @@ class Request
     $this->original_url = $isAdmin ? "" : null;
   }
   
+  public static function buildPaypalCartInfo($currencyCode,$items,$total){
+    $cart_items = [];
+    $all_digital_products = true;
+    // prepare totals
+    $totals                             = new \stdClass();
+    $totals->total                      = new \stdClass();
+    $totals->shipping                   = new \stdClass();
+    $totals->tax_total                  = new \stdClass();
+    $totals->discount                   = new \stdClass();
+    $totals->item_total                 = new \stdClass();
+
+    // set currency
+    $totals->total->currency_code       = $currencyCode;
+    $totals->shipping->currency_code    = $currencyCode;
+    $totals->tax_total->currency_code   = $currencyCode;
+    $totals->discount->currency_code    = $currencyCode;
+    $totals->item_total->currency_code  = $currencyCode;
+
+    // initialize amount
+    $totals->total->value               = 0.0;
+    $totals->shipping->value            = 0.0;
+    $totals->tax_total->value           = 0.0;
+    $totals->discount->value            = 0.0;
+
+    foreach($items as $item){
+      // calc per unit
+      $price_per_unit                          = round((float)$item["unit_price"],2,PHP_ROUND_HALF_UP);
+      $tax_per_unit                            = round((float)$item["unit_tax"],2,PHP_ROUND_HALF_UP);
+
+      // initialize
+      $paypal_item                             = new \stdClass();
+      $unit_amount                             = new \stdClass();
+      $paypal_item->unit_amount                = new \stdClass();
+      $paypal_item->name                       = $item["name"];
+      $paypal_item->quantity                   = strval($item["qty"]);
+      $paypal_item->sku                        = $item["sku"];
+      $paypal_item->unit_amount->currency_code = $currencyCode;
+      $paypal_item->unit_amount->value         = strval($price_per_unit);
+      
+      if($item["is_digital"]){
+        $paypal_item->category    = "DIGITAL_GOODS";
+      }else{
+        $paypal_item->category    = "PHYSICAL_GOODS";
+        $all_digital_products     = false;
+      }
+      // update totals:
+      $totals->total->value      += $paypal_item->unit_amount->value * $item["qty"];
+      $cart_items[] = $paypal_item;
+    }
+
+    $grand_total                  =  strval(round((float)$total["total"],2,PHP_ROUND_HALF_UP));
+    $total_wo_shipping            =  strval(round((float)$total["total"] - $total["shipping"],2,PHP_ROUND_HALF_UP));
+    $totals->shipping->value      =  strval(round((float)$total["shipping"],2,PHP_ROUND_HALF_UP));
+    $totals->tax_total->value     =  round((float)$total["tax"],2,PHP_ROUND_HALF_UP);
+    $totals->discount->value      =  strval($totals->total->value + $totals->tax_total->value - $total_wo_shipping);
+    $totals->total->value         =  strval($totals->total->value);
+    $totals->tax_total->value     =  strval($totals->tax_total->value);
+    $totals->item_total->value    =  strval($totals->total->value);
+
+    return ["items" => $cart_items, "is_digital" => $all_digital_products, "total" => $grand_total, "breakdown"=>$totals ];
+  }
+
   /**
    * Returns the required JSON to proxy a request to Waiap
    *
@@ -80,9 +142,9 @@ class Request
    * @return void
    */
   public function setAmount($amount){
-    if($amount <= floatval(0)){
-      throw new \PWall\Exception\InvalidArgumentException('Order amount must be more than 0');
-    }
+    // if($amount <= floatval(0)){
+    //   throw new \PWall\Exception\InvalidArgumentException('Order amount must be more than 0');
+    // }
     $this->amount = strval($amount * 100);
   }
 
@@ -146,5 +208,71 @@ class Request
 
     return false;
   }
-  
+
+  /**
+   * Check if request is and action of express checkbox
+   * 
+   * @return boolean true if request is for sale action, false otherwise
+   */
+  public function isActionExpressCheckout(){
+    if(is_array($this->request)
+    && array_key_exists("params", $this->request) 
+    && array_key_exists("express_checkout", $this->request["params"])
+    && $this->request["params"]["express_checkout"] == true){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if request is getExtraData action
+   * 
+   * @return boolean true if request is for sale action, false otherwise
+   */
+  public function isActionGetExtraData()
+  {
+    if (
+      is_array($this->request)
+      && array_key_exists("action", $this->request)
+      && $this->request["action"] == true
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if request is Paypal get cart info action
+   * 
+   * @return boolean true if request is Paypal get cart info action, false otherwise
+   */
+  public function isPaypalEcCreateOrder(){
+    if(
+      is_array($this->request)
+      && array_key_exists("params", $this->request)
+      && array_key_exists("create_order", $this->request["params"])
+      && $this->request["params"]["create_order"] == true
+      && array_key_exists("method", $this->request["params"])
+      && $this->request["params"]["method"] == "paypal"
+      && array_key_exists("express", $this->request["params"])
+      && $this->request["params"]["express"] == true
+    ){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Set cart info to paypal express checkout
+   * @param  string $items      Cart info formatted as Paypal requierements
+   * @param  string $is_digital true if all items in the cart are digital, false otherwise
+   * @return void
+   */
+  public function setPaypalEcCartInfo($items, $is_digital)
+  {
+    $this->request["params"]["items"]       = $items;
+    $this->request["params"]["is_digital"]  = $is_digital;
+    $this->request["params"]["breakdown"]   = $breakdown;
+  }
+
 }
