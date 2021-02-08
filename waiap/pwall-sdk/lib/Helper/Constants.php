@@ -17,4 +17,8 @@ class Constants{
   //API ACTIONS
   const PWALL_ACTION_SALE           = "pwall.sale";
   const PWALL_ACTION_GETEXTRADATA   = "pwall.getExtraData";
+
+  //PSD2 
+  const SCA_EXEMPTIONS_TRA_VALUE    = "TRA";
+  const SCA_EXEMPTIONS_LWV_VALUE    = "LWV";
 }
